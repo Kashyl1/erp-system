@@ -55,5 +55,13 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- Import erp-admin -->
+        <dependency>
+            <groupId>com.example</groupId>
+            <artifactId>erp-admin</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>

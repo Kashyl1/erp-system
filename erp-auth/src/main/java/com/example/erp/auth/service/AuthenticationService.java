@@ -13,6 +13,7 @@ import com.example.erp.mail.service.VerificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.LockedException;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -39,8 +40,14 @@ public class AuthenticationService {
 
     @Operation(summary = "Register a new user", description = "Handles user registration and sends verification email")
     public AuthenticationResponse register(RegisterRequest request) {
-        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null ||
+                authentication.getAuthorities().stream().noneMatch(a -> a.getAuthority().equals("ROLE_ADMIN"))) {
+            throw new UnauthorizedOperationException("Only admin users can register new users.");
+        }
 
+
+        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
         if (existingUser.isPresent()) {
             throw new EmailAlreadyExistsException("Email already exists");
         }
@@ -65,7 +72,7 @@ public class AuthenticationService {
         verificationService.sendWelcomeEmail(user);
 
         return AuthenticationResponse.builder()
-                .message("Registered successfully. Please verify your email.")
+                .message("Registered successfully.")
                 .build();
     }
 
