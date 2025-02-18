@@ -50,5 +50,4 @@ public class UserProfile {
     @Enumerated(EnumType.STRING)
     @Schema(description = "Department the user belongs to", example = "HR")
     private Department department;
-
 }

@@ -17,7 +17,8 @@
 		<module>erp-mail</module>
 		<module>erp-common</module>
 		<module>erp-core</module>
-	</modules>
+        <module>erp-admin</module>
+    </modules>
 
 	<properties>
 		<java.version>17</java.version>
@@ -80,6 +81,12 @@
 				<version>0.11.5</version>
 				<scope>runtime</scope>
 			</dependency>
+
+				<dependency>
+					<groupId>com.example</groupId>
+					<artifactId>erp-auth</artifactId>
+					<version>0.0.1-SNAPSHOT</version>
+				</dependency>
 		</dependencies>
 	</dependencyManagement>
 
